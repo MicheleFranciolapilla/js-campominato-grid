@@ -403,6 +403,7 @@
 /********** BLOCK UTILITIES **********/
 /* .center_text */
 /* .center_block */
+/* .square_box */
 /* .web_app_size */
 /* .width_80 */
 /* .width_70 */
@@ -426,6 +427,10 @@
 
 .center_block{
     margin: 0 auto;
+}
+
+.square_box{
+    aspect-ratio: 1;
 }
 
 .web_app_size{

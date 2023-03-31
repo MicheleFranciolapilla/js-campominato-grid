@@ -14,3 +14,47 @@
 // Di cosa ho bisogno per generare i numeri?
 // Proviamo sempre prima con dei console.log() per capire se stiamo ricevendo i dati giusti.
 // Le validazioni e i controlli possiamo farli anche in un secondo momento.
+
+// COSTANTI E VARIABILI GLOBALI
+
+
+const   rows_easy       = 10; 
+const   rows_medium     = 9;
+const   rows_hard       = 7;
+let     rows_nr         = rows_easy;
+let     cells           = 0; 
+let     bombs_nr        = 0;
+let     random_cells    = false;
+let     play_ground;
+
+function new_element(what, class_array, index)
+{
+    let item = document.createElement(what);
+    for (let i = 0; i < class_array.length; i++)
+    {
+        item.classList.add(class_array[i]);
+    }
+    item.innerText = index;
+    console.log(item);
+    return item;
+}
+
+function create_game_grid()
+{
+    cells = Math.pow(rows_nr, 2);
+    cells = 5;
+    play_ground = document.createElement("div");
+    play_ground.setAttribute("id", "game_grid");
+    play_ground.classList.add("d_flex", "flex_wrap");
+    for (let i = 1; i <= cells; i++)
+    {
+        let element = new_element("div", ["classe1","classe2","classe3","classe-n","classe-m"], i);
+        play_ground.append(element);
+    }
+    document.querySelector("main").append(play_ground);
+    console.log(cells);
+    console.log(play_ground);
+    console.log(document.querySelector("main"));
+}
+
+create_game_grid();

@@ -2,18 +2,19 @@
 :root
 {
     /* VARIABILI DIMENSIONALI */
-    --header_height :   10vh;
-    --footer_height :   7vh; 
+    --header_height     : 6vh;
+    --footer_height     : 4vh; 
+    --game_grid_side    : 80vh; 
     /* VARIABILI CROMATICHE */
-    --main_color    :   #7FFFD4; 
-    --h_f_color     :   #FFFFFF;
-    --btn_color     :   rgb(169, 165, 165); 
+    --main_color        : #7FFFD4; 
+    --h_f_color         : #FFFFFF;
+    --btn_color         : rgb(169, 165, 165); 
 }
 
 .slim_btn
 {
     color: black;
-    padding: 0.5rem 2rem;
+    padding: 0.3rem 1.5rem;
     border-radius: 0.5rem;
     background-color: var(--btn_color);
 }
@@ -41,8 +42,12 @@ header > #logo_group > img
 main
 {
     height: calc(100% - var(--header_height) - var(--footer_height));
-    margin-top: var(--header_height);
     background-color: var(--main_color);
+}
+
+main > #game_grid
+{
+    width: var(--game_grid_side);
 }
 
 footer
