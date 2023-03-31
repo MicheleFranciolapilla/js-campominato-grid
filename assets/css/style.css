@@ -1,0 +1,54 @@
+/* DICHIARAZIONE VARIABILI */
+:root
+{
+    /* VARIABILI DIMENSIONALI */
+    --header_height :   10vh;
+    --footer_height :   7vh; 
+    /* VARIABILI CROMATICHE */
+    --main_color    :   #7FFFD4; 
+    --h_f_color     :   #FFFFFF;
+    --btn_color     :   rgb(169, 165, 165); 
+}
+
+.slim_btn
+{
+    color: black;
+    padding: 0.5rem 2rem;
+    border-radius: 0.5rem;
+    background-color: var(--btn_color);
+}
+
+header
+{
+    height: var(--header_height);
+    background-color: var(--h_f_color);
+    padding-right: 1rem;
+}
+
+header > #logo_group, 
+header > nav
+{
+    height: 100%;
+}
+
+header > #logo_group > img
+{
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+}
+
+main
+{
+    height: calc(100% - var(--header_height) - var(--footer_height));
+    margin-top: var(--header_height);
+    background-color: var(--main_color);
+}
+
+footer
+{
+    height: var(--footer_height);
+    background-color: var(--h_f_color);
+    padding-left: 1rem;
+    column-gap: 0.5rem;
+}
