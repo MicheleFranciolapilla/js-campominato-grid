@@ -5,7 +5,7 @@
     --header_height     : 6vh;
     --footer_height     : 4vh; 
     --game_grid_side    : 80vh; 
-    --rows              : 0;
+    --rows              : 0; /* Valore modificato direttamente da main.js*/
     --game_grid_gap     : 3px; 
     /* VARIABILI CROMATICHE */
     --main_color        : #7FFFD4; 
@@ -13,6 +13,7 @@
     --btn_color         : rgb(169, 165, 165); 
     --grid_bg_color     : rgb(23, 22, 22);
     --cell_color        : lightgray; 
+    --clicked_cell_col  : rgb(113, 152, 164);
     --cell_border_col1  : rgb(95, 92, 92);
     --cell_border_col2  : rgb(225, 169, 169);
 
@@ -23,6 +24,7 @@
     color: black;
     padding: 0.3rem 1.5rem;
     border-radius: 0.5rem;
+    border: 1px solid blue;
     background-color: var(--btn_color);
 }
 
@@ -44,6 +46,11 @@ header > #logo_group > img
     height: 100%;
     width: auto;
     object-fit: contain;
+}
+
+header > nav
+{
+    gap:    1rem;
 }
 
 main
@@ -70,6 +77,16 @@ main > #game_grid > .cell
     border-bottom : 5px solid var(--cell_border_col1);
     border-left : 5px solid var(--cell_border_col2);
     border-top : 5px solid var(--cell_border_col2);
+}
+
+main > #game_grid > .cell.clicked_cell
+{
+    cursor: default;
+    background-color: var(--clicked_cell_col);
+    border-right : 5px solid var(--cell_border_col2);
+    border-bottom : 5px solid var(--cell_border_col2);
+    border-left : 5px solid var(--cell_border_col1);
+    border-top : 5px solid var(--cell_border_col1);
 }
 
 footer

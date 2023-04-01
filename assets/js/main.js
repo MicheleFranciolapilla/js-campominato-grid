@@ -18,13 +18,14 @@
 // COSTANTI E VARIABILI GLOBALI
 
 
-const   rows_easy       = 10; 
-const   rows_medium     = 9;
-const   rows_hard       = 7;
-let     rows_nr         = 3;
-let     cells           = 0; 
-let     bombs_nr        = 0;
-let     random_cells    = false;
+const   rows_10             = 10; 
+const   rows_9              = 9;
+const   rows_7              = 7;
+let     rows_nr             = rows_10;
+let     cells               = 0; 
+let     bombs_nr            = 0;
+let     random_cells        = false;
+let     game_grid_exists    = false;
 let     play_ground;
 
 function set_row_nr_css()
@@ -41,7 +42,6 @@ function new_element(what, class_array, value_)
         item.classList.add(class_array[i]);
     }
     item.innerText = value_;
-    console.log(item);
     return item;
 }
 
@@ -54,13 +54,32 @@ function create_game_grid()
     for (let i = 1; i <= cells; i++)
     {
         let element = new_element("div", ["cell", "d_flex", "flex_center"], i);
+        element.addEventListener("click", function()
+        {
+            if (!this.classList.contains("clicked_cell"))
+            {
+                this.classList.add("clicked_cell");
+                console.log("Hai cliccato sulla cella nr: ",i);
+            }
+            else
+            {
+                console.log(`La cella nr ${i} era già attiva!`);
+            }
+        });
         play_ground.append(element);
     }
-    document.querySelector("main").append(play_ground);
-    console.log(cells);
-    console.log(play_ground);
-    console.log(document.querySelector("main"));
+    document.querySelector("#main_core").append(play_ground);
+    game_grid_exists = true;
 }
 
-set_row_nr_css();
-create_game_grid();
+function go_to_game()
+{
+    if (game_grid_exists)
+    {
+        play_ground.remove();
+        game_grid_exists = false;
+    }
+    set_row_nr_css();
+    create_game_grid();
+}
+

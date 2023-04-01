@@ -19,13 +19,13 @@
                 <h1 class="d_ib">Campo Minato</h1>
             </div>
             <nav class="d_flex flex_cross_center">
-                <a href="#" class="slim_btn reset_decor">Play</a>
+                <a href="#" class="slim_btn reset_decor" onclick="go_to_game()">Play</a>
+                <a href="#" class="slim_btn reset_decor" onclick="window.close()">Quit</a>
             </nav>
         </header>
-        <main class="d_flex flex_center">
-            <!-- <div id="game_grid" class="debug_b"></div> -->
+        <main id="main_core" class="d_flex flex_center">
         </main>
-        <footer class="d_flex flex_cross_center">
+        <footer class="p_fixed_footer d_flex flex_cross_center">
             <span>Made with <span style="color: red">&hearts;</span> by </span>
             <a href="#">Boolean</a>
         </footer>
