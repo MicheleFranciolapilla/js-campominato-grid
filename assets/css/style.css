@@ -5,10 +5,17 @@
     --header_height     : 6vh;
     --footer_height     : 4vh; 
     --game_grid_side    : 80vh; 
+    --rows              : 10;
+    --game_grid_gap     : 3px; 
     /* VARIABILI CROMATICHE */
     --main_color        : #7FFFD4; 
     --h_f_color         : #FFFFFF;
     --btn_color         : rgb(169, 165, 165); 
+    --grid_bg_color     : rgb(23, 22, 22);
+    --cell_color        : lightgray; 
+    --cell_border_col1  : rgb(95, 92, 92);
+    --cell_border_col2  : rgb(225, 169, 169);
+
 }
 
 .slim_btn
@@ -48,6 +55,21 @@ main
 main > #game_grid
 {
     width: var(--game_grid_side);
+    background-color: var(--grid_bg_color);
+    padding: calc(var(--game_grid_gap) * 2);
+    gap: var(--game_grid_gap);
+}
+
+main > #game_grid > .cell
+{
+    aspect-ratio: 1;
+    flex-basis: calc((100% - ((var(--rows) - 1) * var(--game_grid_gap))) / var(--rows));
+    /* padding: var(--cell_padding); */
+    background-color: var(--cell_color);
+    border-right : 3px solid var(--cell_border_col1);
+    border-bottom : 3px solid var(--cell_border_col1);
+    border-left : 3px solid var(--cell_border_col2);
+    border-top : 3px solid var(--cell_border_col2);
 }
 
 footer

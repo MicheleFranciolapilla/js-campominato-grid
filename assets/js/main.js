@@ -27,14 +27,14 @@ let     bombs_nr        = 0;
 let     random_cells    = false;
 let     play_ground;
 
-function new_element(what, class_array, index)
+function new_element(what, class_array, value_)
 {
     let item = document.createElement(what);
     for (let i = 0; i < class_array.length; i++)
     {
         item.classList.add(class_array[i]);
     }
-    item.innerText = index;
+    item.innerText = value_;
     console.log(item);
     return item;
 }
@@ -42,13 +42,12 @@ function new_element(what, class_array, index)
 function create_game_grid()
 {
     cells = Math.pow(rows_nr, 2);
-    cells = 5;
     play_ground = document.createElement("div");
     play_ground.setAttribute("id", "game_grid");
-    play_ground.classList.add("d_flex", "flex_wrap");
+    play_ground.classList.add("d_flex", "flex_wrap", "flex_main_btw");
     for (let i = 1; i <= cells; i++)
     {
-        let element = new_element("div", ["classe1","classe2","classe3","classe-n","classe-m"], i);
+        let element = new_element("div", ["cell", "d_flex", "flex_center"], i);
         play_ground.append(element);
     }
     document.querySelector("main").append(play_ground);
