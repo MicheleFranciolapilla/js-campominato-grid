@@ -5,7 +5,7 @@
     --header_height     : 6vh;
     --footer_height     : 4vh; 
     --game_grid_side    : 80vh; 
-    --rows              : 10;
+    --rows              : 0;
     --game_grid_gap     : 3px; 
     /* VARIABILI CROMATICHE */
     --main_color        : #7FFFD4; 
@@ -63,13 +63,13 @@ main > #game_grid
 main > #game_grid > .cell
 {
     aspect-ratio: 1;
+    cursor: pointer;
     flex-basis: calc((100% - ((var(--rows) - 1) * var(--game_grid_gap))) / var(--rows));
-    /* padding: var(--cell_padding); */
     background-color: var(--cell_color);
-    border-right : 3px solid var(--cell_border_col1);
-    border-bottom : 3px solid var(--cell_border_col1);
-    border-left : 3px solid var(--cell_border_col2);
-    border-top : 3px solid var(--cell_border_col2);
+    border-right : 5px solid var(--cell_border_col1);
+    border-bottom : 5px solid var(--cell_border_col1);
+    border-left : 5px solid var(--cell_border_col2);
+    border-top : 5px solid var(--cell_border_col2);
 }
 
 footer

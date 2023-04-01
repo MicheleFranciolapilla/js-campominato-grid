@@ -21,11 +21,17 @@
 const   rows_easy       = 10; 
 const   rows_medium     = 9;
 const   rows_hard       = 7;
-let     rows_nr         = rows_easy;
+let     rows_nr         = 3;
 let     cells           = 0; 
 let     bombs_nr        = 0;
 let     random_cells    = false;
 let     play_ground;
+
+function set_row_nr_css()
+{
+    let css_root = document.querySelector(":root");
+    css_root.style.setProperty("--rows", rows_nr);
+}
 
 function new_element(what, class_array, value_)
 {
@@ -56,4 +62,5 @@ function create_game_grid()
     console.log(document.querySelector("main"));
 }
 
+set_row_nr_css();
 create_game_grid();
