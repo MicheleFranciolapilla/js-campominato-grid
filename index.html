@@ -19,8 +19,13 @@
                 <h1 class="d_ib">Campo Minato</h1>
             </div>
             <nav class="d_flex flex_cross_center">
+                <select id="rows_number_select" name="row_number">
+                    <option value="">-- Numero di righe --</option>
+                    <option value="r_10">10 righe (default)</option>
+                    <option value="r_9">9 righe</option>
+                    <option value="r_7">7 righe</option>
+                </select>
                 <a href="#" class="slim_btn reset_decor" onclick="go_to_game()">Play</a>
-                <a href="#" class="slim_btn reset_decor" onclick="window.close()">Quit</a>
             </nav>
         </header>
         <main id="main_core" class="d_flex flex_center">

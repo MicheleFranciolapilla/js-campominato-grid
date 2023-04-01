@@ -23,9 +23,11 @@ const   rows_9              = 9;
 const   rows_7              = 7;
 let     rows_nr             = rows_10;
 let     cells               = 0; 
+let     clicked_cell        = 0;
 let     bombs_nr            = 0;
 let     random_cells        = false;
 let     game_grid_exists    = false;
+let     game_on_going       = false;
 let     play_ground;
 
 function set_row_nr_css()
@@ -45,8 +47,18 @@ function new_element(what, class_array, value_)
     return item;
 }
 
+function check_clicked_nr()
+{
+    if (clicked_cell == cells)
+    {
+        game_on_going = false;
+    }
+}
+
 function create_game_grid()
 {
+    game_on_going = true;
+    clicked_cell = 0;
     cells = Math.pow(rows_nr, 2);
     play_ground = document.createElement("div");
     play_ground.setAttribute("id", "game_grid");
@@ -60,6 +72,8 @@ function create_game_grid()
             {
                 this.classList.add("clicked_cell");
                 console.log("Hai cliccato sulla cella nr: ",i);
+                clicked_cell++;
+                check_clicked_nr();
             }
             else
             {
@@ -74,12 +88,38 @@ function create_game_grid()
 
 function go_to_game()
 {
-    if (game_grid_exists)
+    if (!game_grid_exists)
     {
-        play_ground.remove();
-        game_grid_exists = false;
+        // Significa che la griglia non c'e' e che quindi non si sta giocando, quindi si puo' iniziare
+        const new_rows_nr = document.getElementById("rows_number_select").value;
+        switch (new_rows_nr)
+        {
+            case "r_10":
+                rows_nr = rows_10;
+                break;
+            case "r_9":
+                rows_nr = rows_9;
+                break;
+            case "r_7":
+                rows_nr = rows_7;
+                break;
+        }
+        console.log(`Ok, puoi iniziare una nuova partita con ${rows_nr} righe e ${rows_nr} colonne`)
+        set_row_nr_css();
+        create_game_grid();
     }
-    set_row_nr_css();
-    create_game_grid();
+    else 
+        if (!game_on_going)
+        {
+            console.log("Ok, ricominciamo");
+            play_ground.remove();
+            game_grid_exists = false;
+            go_to_game();
+        }
+        else
+        {
+            console.log("La partita e' ancora in corso");
+            // Significa che e' in corso un gioco e che non e' ancora terminato
+        }
 }
 
