@@ -22,13 +22,15 @@ const   rows_10             = 10;
 const   rows_9              = 9;
 const   rows_7              = 7;
 let     rows_nr             = rows_10;
+let     score               = 0; 
 let     cells               = 0; 
-let     clicked_cell        = 0;
+let     clicked_cells       = 0;
 let     bombs_nr            = 0;
 let     random_cells        = false;
 let     game_grid_exists    = false;
 let     game_on_going       = false;
 let     play_ground;
+let     mouse_hold_pressed  = false;
 
 function set_row_nr_css()
 {
@@ -43,26 +45,33 @@ function new_element(what, class_array, value_)
     {
         item.classList.add(class_array[i]);
     }
-    item.innerText = value_;
+    item.innerHTML = `<h6 class="d_none">${value_}</h6>`;
     return item;
 }
 
 function check_clicked_nr()
 {
-    if (clicked_cell == cells)
+    if (clicked_cells == cells)
     {
         game_on_going = false;
     }
 }
 
+function show_score()
+{
+    document.getElementById("score_info").innerText = score;
+}
+
 function create_game_grid()
 {
     game_on_going = true;
-    clicked_cell = 0;
+    clicked_cells = 0;
+    score = 0;
     cells = Math.pow(rows_nr, 2);
     play_ground = document.createElement("div");
     play_ground.setAttribute("id", "game_grid");
     play_ground.classList.add("d_flex", "flex_wrap", "flex_main_btw");
+    show_score();
     for (let i = 1; i <= cells; i++)
     {
         let element = new_element("div", ["cell", "d_flex", "flex_center"], i);
@@ -72,7 +81,9 @@ function create_game_grid()
             {
                 this.classList.add("clicked_cell");
                 console.log("Hai cliccato sulla cella nr: ",i);
-                clicked_cell++;
+                score += i;
+                show_score();
+                clicked_cells++;
                 check_clicked_nr();
             }
             else
@@ -122,4 +133,33 @@ function go_to_game()
             // Significa che e' in corso un gioco e che non e' ancora terminato
         }
 }
+
+help_btn.addEventListener("mousedown",function()
+{
+    if (game_grid_exists)
+    {
+        let cell_content = document.querySelectorAll("#game_grid h6");
+        mouse_hold_pressed = true;
+        for (let i = 0; i < cells; i++)
+        {
+            cell_content[i].classList.remove("d_none");
+        }
+    }
+});
+
+// Ricordarsi di sistemare la questione del mouse drag
+
+help_btn.addEventListener("mouseup",function()
+{
+    if (game_grid_exists)
+    {
+        let cell_content = document.querySelectorAll("#game_grid h6");
+        mouse_hold_pressed = false;
+        for (let i = 0; i < cells; i++)
+        {
+            cell_content[i].classList.add("d_none");
+        }
+    }
+});
+
 

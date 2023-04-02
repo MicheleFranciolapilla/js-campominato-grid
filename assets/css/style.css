@@ -59,9 +59,64 @@ main
     background-color: var(--main_color);
 }
 
+#side_menu_bar,
+#side_info_bar
+{
+    flex-basis: calc((100% - var(--game_grid_side)) / 2);
+    order: 0;
+}
+
+#side_info_bar
+{
+    order: 2;
+}
+
+#side_menu_bar > #side_menu_list,
+#side_info_bar > #side_info_list
+{
+    border: 5px solid rgb(93, 91, 91);
+    border-radius: 0.5rem;
+    padding: 1rem;
+}
+
+
+#side_menu_bar > #side_menu_list > .menu_item
+{
+    width: 4rem;
+    aspect-ratio: 1;
+    background-color: var(--cell_color);
+    text-align: center; 
+    line-height: 4rem;
+    font-size: 3rem;
+    border: 3px solid gray;
+    border-radius: 0.5rem;
+}
+
+#side_info_bar > #side_info_list > .info_item
+{
+    height: 4rem;
+    padding: 0 0.5rem;
+    background-color: var(--cell_color);
+    text-align: left;
+    line-height: 4rem;
+    font-size: 3rem;
+    border: 3px solid gray;
+    border-radius: 0.5rem;
+}
+
+#side_menu_bar > #side_menu_list > .menu_item > a
+{
+    color: white;
+}
+
+#side_menu_bar > #side_menu_list > .menu_item > a:hover
+{
+    color: blue;
+}
+
 main > #game_grid
 {
-    width: var(--game_grid_side);
+    flex-basis: var(--game_grid_side);
     background-color: var(--grid_bg_color);
     padding: calc(var(--game_grid_gap) * 2);
     gap: var(--game_grid_gap);
