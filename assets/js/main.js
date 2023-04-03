@@ -22,15 +22,28 @@ const   rows_10             = 10;
 const   rows_9              = 9;
 const   rows_7              = 7;
 let     rows_nr             = rows_10;
+
+const   release_random      = true;
+const   release_ordered     = false;
+let     release_numbers     = release_ordered;
+
+const   bombs_0             = "Nessuna";
+const   bombs_easy          = "10%";
+const   bombs_medium        = "25%";
+const   bombs_hard          = "50%";
+let     bombs_str           = bombs_0;   
+let     bombs_number        = 0;  
+
 let     score               = 0; 
-let     cells               = 0; 
-let     clicked_cells       = 0;
-let     bombs_nr            = 0;
-let     random_cells        = false;
+let     cells_total         = 0; 
+let     cells_valid         = 0; 
+let     cells_clicked       = 0;
 let     game_grid_exists    = false;
 let     game_on_going       = false;
+const   value_available     = true;
+let     boolean_array       = []; 
 let     play_ground;
-let     mouse_hold_pressed  = false;
+// let     mouse_hold_pressed  = false;
 
 function set_row_nr_css()
 {
@@ -51,15 +64,22 @@ function new_element(what, class_array, value_)
 
 function check_clicked_nr()
 {
-    if (clicked_cells == cells)
+    if (cells_clicked == cells_valid)
     {
+        // Termina partita
         game_on_going = false;
     }
 }
 
+function show_menu_bar()
+{
+    menu_bar = document.getElementById("side_menu_bar");
+    menu_bar.classList.remove("d_none");
+    menu_bar.classList.add("d_flex","flex_main_center");
+}
+
 function show_info_bar()
 {
-    score = 0;
     info_bar = document.getElementById("side_info_bar");
     info_bar.classList.remove("d_none");
     info_bar.classList.add("d_flex","flex_main_center");
@@ -70,39 +90,114 @@ function show_score()
     document.getElementById("score_info").innerText = score;
 }
 
+function random_int(max)
+{
+    return Math.floor(Math.random() * max);
+}
+
+function create_boolean_array()
+{
+    boolean_array = [];
+    for (let index = 0; index < cells_total; index++)
+    {
+        boolean_array.push(value_available);
+    }
+}
+
+function randomize_value(index)
+{
+    if (release_numbers == release_ordered)
+    {
+        return index;
+    }
+    else
+    {
+        let random_value = 0;
+        let bool_value = !value_available;
+        while (bool_value == !value_available)
+        {
+            random_value = random_int(cells_total) + 1;
+            bool_value = boolean_array[random_value];
+        }
+        boolean_array[random_value] = !value_available;
+        return random_value;
+    }
+}
+
 function create_game_grid()
 {
+    score = 0;
+    cells_clicked = 0;
+    cells_total = Math.pow(rows_nr, 2);
+    if (release_numbers == release_random)
+    {
+        create_boolean_array();
+    }
+    switch (document.getElementById("random_number_select").value)
+    {
+        case "random_nr_no":
+            release_numbers = release_ordered;
+            break;
+        case "random_nr_yes":
+            release_numbers = release_random;
+            break;
+    }
+    switch (document.getElementById("bombs_number_select").value)
+    {
+        case "no_bombs":
+            bombs_str = bombs_0;
+            bombs_number = 0;
+            break;
+        case "bombs_10":
+            bombs_str = bombs_easy;
+            bombs_number = Math.floor(cells_total * 0.1);
+            break;
+        case "bombs_25":
+            bombs_str = bombs_medium;
+            bombs_number = Math.floor(cells_total * 0.25);
+            break;
+        case "bombs_50":
+            bombs_str = bombs_hard;
+            bombs_number = Math.floor(cells_total * 0.5);
+            break;
+    }
+    cells_valid = cells_total - bombs_number;
+    game_grid_exists = true;
     game_on_going = true;
-    clicked_cells = 0;
-    cells = Math.pow(rows_nr, 2);
     play_ground = document.createElement("div");
     play_ground.setAttribute("id", "game_grid");
     play_ground.classList.add("d_flex", "flex_wrap", "flex_main_btw");
+    show_menu_bar();
     show_info_bar();
     show_score();
-    for (let i = 1; i <= cells; i++)
+    for (let i = 1; i <= cells_total; i++)
     {
-        let element = new_element("div", ["cell", "d_flex", "flex_center"], i);
+        let free_value = randomize_value(i);
+        let element = new_element("div", ["cell", "d_flex", "flex_center"], free_value);
         element.addEventListener("click", function()
         {
             if (!this.classList.contains("clicked_cell"))
             {
                 this.classList.add("clicked_cell");
-                console.log("Hai cliccato sulla cella nr: ",i);
-                score += i;
+                // console.log("Hai cliccato sulla cella nr: ",i);
+                score++;
                 show_score();
-                clicked_cells++;
+                cells_clicked++;
                 check_clicked_nr();
             }
-            else
-            {
-                console.log(`La cella nr ${i} era già attiva!`);
-            }
+            // else
+            // {
+            //     console.log(`La cella nr ${i} era già attiva!`);
+            // }
         });
+        if ((cells_total - bombs_number) < free_value)
+        {
+            element.classList.add("with_bomb");
+            element.innerHTML = `<h6 class="d_none">0</h6>`;
+        } 
         play_ground.append(element);
     }
     document.querySelector("#main_core").append(play_ground);
-    game_grid_exists = true;
 }
 
 msg_btn.addEventListener("click", function()
@@ -128,9 +223,8 @@ function go_to_game()
 {
     if (!game_grid_exists)
     {
-        // Significa che la griglia non c'e' e che quindi non si sta giocando, quindi si puo' iniziare
-        const new_rows_nr = document.getElementById("rows_number_select").value;
-        switch (new_rows_nr)
+        // Significa che la griglia non c'e' e che non si sta giocando, quindi si puo' iniziare
+        switch (document.getElementById("rows_number_select").value)
         {
             case "r_10":
                 rows_nr = rows_10;
@@ -167,7 +261,7 @@ help_btn.addEventListener("mousedown",function()
     {
         let cell_content = document.querySelectorAll("#game_grid h6");
         mouse_hold_pressed = true;
-        for (let i = 0; i < cells; i++)
+        for (let i = 0; i < cells_total; i++)
         {
             cell_content[i].classList.remove("d_none");
         }
@@ -182,7 +276,7 @@ help_btn.addEventListener("mouseup",function()
     {
         let cell_content = document.querySelectorAll("#game_grid h6");
         mouse_hold_pressed = false;
-        for (let i = 0; i < cells; i++)
+        for (let i = 0; i < cells_total; i++)
         {
             cell_content[i].classList.add("d_none");
         }
