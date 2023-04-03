@@ -38,6 +38,7 @@
     cursor: pointer;
 }
 
+.slim_btn:hover,
 .ok_btn:hover
 {
     background-color: blue;

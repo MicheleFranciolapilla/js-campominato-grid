@@ -27,11 +27,23 @@
                 <h1 class="d_ib">Campo Minato</h1>
             </div>
             <nav class="d_flex flex_cross_center">
+                <select id="random_number_select" name="random_number">
+                    <option value="">-- Distribuzione punti --</option>
+                    <option value="random_nr_no">Ordinati (default)</option>
+                    <option value="random_nr_yes">Casuale</option>
+                </select>
                 <select id="rows_number_select" name="row_number">
                     <option value="">-- Numero di righe --</option>
                     <option value="r_10">10 righe (default)</option>
                     <option value="r_9">9 righe</option>
                     <option value="r_7">7 righe</option>
+                </select>
+                <select id="bombs_number_select" name="bombs_number">
+                    <option value="">-- Presenza di celle minate --</option>
+                    <option value="no_bombs">Nessuna bomba (default)</option>
+                    <option value="bombs_10">10%</option>
+                    <option value="bombs_25">25%</option>
+                    <option value="bombs_50">50%</option>
                 </select>
                 <a href="#" class="slim_btn reset_decor" onclick="go_to_game()">Play</a>
             </nav>
