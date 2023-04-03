@@ -28,6 +28,42 @@
     background-color: var(--btn_color);
 }
 
+.ok_btn
+{
+    color: yellow;
+    padding: 0.5rem 2rem;
+    border-radius: 0.5rem;
+    border: 5px solid yellow;
+    background-color: var(--btn_color);
+    cursor: pointer;
+}
+
+.ok_btn:hover
+{
+    background-color: blue;
+    color: white;
+    border-color: white;
+}
+
+#message_box
+{
+    z-index: 1001;
+    gap: 2rem;
+    font-size: 0.7rem;
+    color: yellow;
+    background-color: gray;
+    padding: 1rem;
+    border: 5px solid yellow;
+}
+
+#overlay
+{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+}
+
 header
 {
     height: var(--header_height);

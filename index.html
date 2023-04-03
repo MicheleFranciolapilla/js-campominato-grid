@@ -15,7 +15,12 @@
     <title>Campo minato</title>
 </head>
 <body>
-    <div id="web_app" class="web_app_size">
+    <div id="message_box" class="d_none p_abs p_center">
+        <h2>Messaggio all'utente</h2>
+        <button id="msg_btn" class="ok_btn" type="button">OK</button>
+    </div>
+    <div id="web_app" class="p_rel web_app_size">
+        <div id="overlay" class="d_none p_abs"></div>
         <header class="d_flex flex_main_btw">
             <div id="logo_group" class="d_flex flex_main_btw flex_cross_center">
                 <img src="assets/img/mobile-logo.png" alt="Logo Boolean">
@@ -39,7 +44,7 @@
                     </li>
                 </ul>
             </aside>
-            <aside id="side_info_bar" class="d_flex flex_main_center">
+            <aside id="side_info_bar" class="d_none">
                 <ul id="side_info_list" class="reset_list_style d_flex flex_column">
                     <li class="info_item">
                         <span>Punti: <span id="score_info"></span></span>

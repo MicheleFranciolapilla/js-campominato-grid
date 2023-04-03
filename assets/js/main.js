@@ -57,6 +57,14 @@ function check_clicked_nr()
     }
 }
 
+function show_info_bar()
+{
+    score = 0;
+    info_bar = document.getElementById("side_info_bar");
+    info_bar.classList.remove("d_none");
+    info_bar.classList.add("d_flex","flex_main_center");
+}
+
 function show_score()
 {
     document.getElementById("score_info").innerText = score;
@@ -66,11 +74,11 @@ function create_game_grid()
 {
     game_on_going = true;
     clicked_cells = 0;
-    score = 0;
     cells = Math.pow(rows_nr, 2);
     play_ground = document.createElement("div");
     play_ground.setAttribute("id", "game_grid");
     play_ground.classList.add("d_flex", "flex_wrap", "flex_main_btw");
+    show_info_bar();
     show_score();
     for (let i = 1; i <= cells; i++)
     {
@@ -97,6 +105,25 @@ function create_game_grid()
     game_grid_exists = true;
 }
 
+msg_btn.addEventListener("click", function()
+{    
+    let msg_box = document.getElementById("message_box");
+    msg_box.classList.remove("d_flex", "flex_column", "flex_cross_center");
+    msg_box.classList.add("d_none");
+    let page_overlay = document.getElementById("overlay");
+    page_overlay.classList.toggle("d_none");
+});
+
+function show_message(message)
+{
+    let page_overlay = document.getElementById("overlay");
+    page_overlay.classList.toggle("d_none");
+    let msg_box = document.getElementById("message_box");
+    msg_box.classList.remove("d_none");
+    msg_box.classList.add("d_flex", "flex_column", "flex_cross_center");
+    msg_box.firstElementChild.innerHTML = `<h2>${message}</h2>`;
+}
+
 function go_to_game()
 {
     if (!game_grid_exists)
@@ -115,21 +142,21 @@ function go_to_game()
                 rows_nr = rows_7;
                 break;
         }
-        console.log(`Ok, puoi iniziare una nuova partita con ${rows_nr} righe e ${rows_nr} colonne`)
+        show_message(`Ok, puoi iniziare una nuova partita con ${rows_nr} righe e ${rows_nr} colonne`);
         set_row_nr_css();
         create_game_grid();
     }
     else 
         if (!game_on_going)
         {
-            console.log("Ok, ricominciamo");
+            show_message("Ok, ricominciamo");
             play_ground.remove();
             game_grid_exists = false;
             go_to_game();
         }
         else
         {
-            console.log("La partita e' ancora in corso");
+            show_message("La partita è ancora in corso. <br> Premi sull'icona (Stop) per terminarla.");
             // Significa che e' in corso un gioco e che non e' ancora terminato
         }
 }
