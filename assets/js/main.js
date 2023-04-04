@@ -34,6 +34,7 @@ const   bombs_hard          = "50%";
 let     bombs_str           = bombs_0;   
 let     bombs_number        = 0;  
 const   bomb_fa_icon        = '<i class="fa-solid fa-bomb fa-beat fa-2xl" style="color: #ff0000;"></i>';
+const   stop_fa_icon        = '<i class="fa-solid fa-xmark"></i>'; 
 
 let     score               = 0; 
 let     cells_total         = 0; 
@@ -290,7 +291,7 @@ function go_to_game()
         }
         else
         {
-            show_message("La partita è ancora in corso. <br> Premi sull'icona (Stop) per terminarla.");
+            show_message(`La partita è ancora in corso. <br> Premi sull'icona (${stop_fa_icon}) per terminarla.`);
             // Significa che e' in corso un gioco e che non e' ancora terminato
         }
 }
@@ -323,4 +324,9 @@ help_btn.addEventListener("mouseup",function()
     }
 });
 
-
+stop_btn.addEventListener("click", function()
+{
+  show_message("La partita è stata chiusa.");  
+  game_on_going = false;
+  reset_game();
+});
