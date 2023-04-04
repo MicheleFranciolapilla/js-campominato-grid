@@ -16,8 +16,6 @@
 // Le validazioni e i controlli possiamo farli anche in un secondo momento.
 
 // COSTANTI E VARIABILI GLOBALI
-
-
 const   rows_10             = 10; 
 const   rows_9              = 9;
 const   rows_7              = 7;
@@ -47,7 +45,6 @@ const   value_available     = true;
 let     exploded            = false; 
 let     boolean_array       = []; 
 let     play_ground;
-// let     mouse_hold_pressed  = false;
 
 function set_row_nr_css()
 {
@@ -181,7 +178,6 @@ function load_bombs()
          {
              random_position = random_int(cells_total);
              random_item = cells_array[random_position];
-             console.log(cells_array[random_position]);
          }
          while (random_item.classList.contains("with_bomb"));
          random_item.classList.add("with_bomb");
