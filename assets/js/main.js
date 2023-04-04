@@ -71,6 +71,7 @@ function reset_game()
     play_ground.remove();
     hide_menu_bar();
     hide_info_bar();
+    toggle_select();
     game_grid_exists = false;
 }
 
@@ -113,9 +114,24 @@ function show_info_bar()
     info_bar.classList.add("d_flex","flex_main_center");
 }
 
-function show_score()
+function release_str()
+{
+    if (release_numbers == release_ordered)
+    {
+        return "No";
+    }
+    else
+    {
+        return "Sì";
+    }
+}
+
+function show_info()
 {
     document.getElementById("score_info").innerText = score;
+    document.getElementById("cells_info").innerText = cells_total;
+    document.getElementById("order_info").innerText = release_str();
+    document.getElementById("bombs_info").innerText = bombs_number;
 }
 
 function random_int(max)
@@ -186,6 +202,13 @@ function hide_explosion(boom_gif)
     play_ground.classList.remove("p_rel");
 }
 
+function toggle_select()
+{
+    document.getElementById("random_number_select").classList.toggle("d_none");
+    document.getElementById("rows_number_select").classList.toggle("d_none");
+    document.getElementById("bombs_number_select").classList.toggle("d_none");
+}
+
 function create_game_grid()
 {
     score = 0;
@@ -232,7 +255,7 @@ function create_game_grid()
     play_ground.classList.add("d_flex", "flex_wrap", "flex_main_btw");
     show_menu_bar();
     show_info_bar();
-    show_score();
+    show_info();
     for (let i = 1; i <= cells_total; i++)
     {
         let free_value = randomize_value(i);
@@ -245,7 +268,7 @@ function create_game_grid()
                 {
                     this.classList.add("clicked_cell");
                     score++;
-                    show_score();
+                    show_info();
                     cells_clicked++;
                     check_clicked_nr();
                 }
@@ -267,6 +290,10 @@ function create_game_grid()
                     }, 5000);
                 }
             }
+            else
+            {
+                console.log("Hai selezionato una cella già aperta");
+            }
         });
         play_ground.append(element);
     }
@@ -275,6 +302,7 @@ function create_game_grid()
         load_bombs();
     }
     document.querySelector("#main_core").append(play_ground);
+    toggle_select();
 }
 
 msg_btn.addEventListener("click", function()
