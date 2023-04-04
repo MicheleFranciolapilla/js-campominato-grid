@@ -33,6 +33,7 @@ const   bombs_medium        = "25%";
 const   bombs_hard          = "50%";
 let     bombs_str           = bombs_0;   
 let     bombs_number        = 0;  
+const   explosion_gif       = "https://media.tenor.com/-g-Um3DDvV0AAAAM/explosion.gif"; 
 const   bomb_fa_icon        = '<i class="fa-solid fa-bomb fa-beat fa-2xl" style="color: #ff0000;"></i>';
 const   stop_fa_icon        = '<i class="fa-solid fa-xmark"></i>'; 
 
@@ -43,6 +44,7 @@ let     cells_clicked       = 0;
 let     game_grid_exists    = false;
 let     game_on_going       = false;
 const   value_available     = true;
+let     exploded            = false; 
 let     boolean_array       = []; 
 let     play_ground;
 // let     mouse_hold_pressed  = false;
@@ -172,9 +174,22 @@ function load_bombs()
     while (counter < bombs_number);
 }
 
+function show_explosion(boom_gif)
+{
+    play_ground.classList.add("p_rel");
+    play_ground.append(boom_gif);
+}
+
+function hide_explosion(boom_gif)
+{
+    boom_gif.remove();
+    play_ground.classList.remove("p_rel");
+}
+
 function create_game_grid()
 {
     score = 0;
+    exploded = false;
     cells_clicked = 0;
     cells_total = Math.pow(rows_nr, 2);
     if (release_numbers == release_random)
@@ -226,11 +241,31 @@ function create_game_grid()
         {
             if (!this.classList.contains("clicked_cell"))
             {
-                this.classList.add("clicked_cell");
-                score++;
-                show_score();
-                cells_clicked++;
-                check_clicked_nr();
+                if (!this.classList.contains("with_bomb"))
+                {
+                    this.classList.add("clicked_cell");
+                    score++;
+                    show_score();
+                    cells_clicked++;
+                    check_clicked_nr();
+                }
+                else
+                {
+                    // E' presente una bomba ed il gioco si conclude con la sconfitta
+                    // Animazione esplosione
+                    let boom_gif = new_element("img", ["p_abs", "p_center"], "");
+                    boom_gif.setAttribute("src",explosion_gif);
+                    boom_gif.setAttribute("alt","explosione");
+                    boom_gif.setAttribute("width","250%");
+                    boom_gif.setAttribute("height","100%");
+                    show_explosion(boom_gif);
+                    exploded = true;
+                    setTimeout(function()
+                    {
+                        hide_explosion(boom_gif);
+                        show_message("Hai cliccato su una cella minata e hai perso. <br> Ritenta, sarai più fortunato!");
+                    }, 5000);
+                }
             }
         });
         play_ground.append(element);
@@ -249,6 +284,11 @@ msg_btn.addEventListener("click", function()
     msg_box.classList.add("d_none");
     let page_overlay = document.getElementById("overlay");
     page_overlay.classList.toggle("d_none");
+    if (exploded)
+    {
+        game_on_going = false;
+        reset_game();
+    }
 });
 
 function show_message(message)
