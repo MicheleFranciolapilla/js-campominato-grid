@@ -33,6 +33,7 @@ const   bombs_medium        = "25%";
 const   bombs_hard          = "50%";
 let     bombs_str           = bombs_0;   
 let     bombs_number        = 0;  
+const   bomb_fa_icon        = '<i class="fa-solid fa-bomb fa-beat fa-2xl" style="color: #ff0000;"></i>';
 
 let     score               = 0; 
 let     cells_total         = 0; 
@@ -62,25 +63,49 @@ function new_element(what, class_array, value_)
     return item;
 }
 
+function reset_game()
+{
+    play_ground.remove();
+    hide_menu_bar();
+    hide_info_bar();
+    game_grid_exists = false;
+}
+
 function check_clicked_nr()
 {
     if (cells_clicked == cells_valid)
     {
         // Termina partita
+        show_message(`Complimenti, hai vinto, totalizzando ${score} punti`);
         game_on_going = false;
+        reset_game();
     }
+}
+
+function hide_menu_bar()
+{
+    let menu_bar = document.getElementById("side_menu_bar");
+    menu_bar.classList.remove("d_flex","flex_main_center");
+    menu_bar.classList.add("d_none");
 }
 
 function show_menu_bar()
 {
-    menu_bar = document.getElementById("side_menu_bar");
+    let menu_bar = document.getElementById("side_menu_bar");
     menu_bar.classList.remove("d_none");
     menu_bar.classList.add("d_flex","flex_main_center");
 }
 
+function hide_info_bar()
+{
+    let info_bar = document.getElementById("side_info_bar");
+    info_bar.classList.remove("d_flex","flex_main_center");
+    info_bar.classList.add("d_none");
+}
+
 function show_info_bar()
 {
-    info_bar = document.getElementById("side_info_bar");
+    let info_bar = document.getElementById("side_info_bar");
     info_bar.classList.remove("d_none");
     info_bar.classList.add("d_flex","flex_main_center");
 }
@@ -122,6 +147,28 @@ function randomize_value(index)
         boolean_array[random_value] = !value_available;
         return random_value;
     }
+}
+
+function load_bombs()
+{
+    let counter = 0;
+    let random_position = 0;
+    let cells_array = play_ground.querySelectorAll(".cell");
+    let random_item;
+    do
+    {
+         counter++;
+         do
+         {
+             random_position = random_int(cells_total);
+             random_item = cells_array[random_position];
+             console.log(cells_array[random_position]);
+         }
+         while (random_item.classList.contains("with_bomb"));
+         random_item.classList.add("with_bomb");
+         random_item.innerHTML = `<h6 class="d_none">${bomb_fa_icon}</h6>`;
+    }
+    while (counter < bombs_number);
 }
 
 function create_game_grid()
@@ -179,23 +226,17 @@ function create_game_grid()
             if (!this.classList.contains("clicked_cell"))
             {
                 this.classList.add("clicked_cell");
-                // console.log("Hai cliccato sulla cella nr: ",i);
                 score++;
                 show_score();
                 cells_clicked++;
                 check_clicked_nr();
             }
-            // else
-            // {
-            //     console.log(`La cella nr ${i} era già attiva!`);
-            // }
         });
-        if ((cells_total - bombs_number) < free_value)
-        {
-            element.classList.add("with_bomb");
-            element.innerHTML = `<h6 class="d_none">0</h6>`;
-        } 
         play_ground.append(element);
+    }
+    if (bombs_number != 0) 
+    {
+        load_bombs();
     }
     document.querySelector("#main_core").append(play_ground);
 }
@@ -244,8 +285,7 @@ function go_to_game()
         if (!game_on_going)
         {
             show_message("Ok, ricominciamo");
-            play_ground.remove();
-            game_grid_exists = false;
+            reset_game();
             go_to_game();
         }
         else
